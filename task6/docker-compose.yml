@@ -1,0 +1,23 @@
+services:
+  front-end:
+    build:
+      context: ./static
+      dockerfile: Dockerfile
+    image: frontend-image
+
+  back-end:          # ← change to this
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: backend-image
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: proxy-image
+    ports:
+      - "80:80"
+    depends_on:
+      - front-end
+      - back-end
