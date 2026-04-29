@@ -1,0 +1,26 @@
+services:
+
+  frontend:
+    build:
+      context: ./static
+      dockerfile: Dockerfile
+    image: frontend-image
+    # ← NO ports mapping here anymore (remove 9000:9000)
+
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: backend-image
+    # ← NO ports mapping here anymore (remove 5252:5252)
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: proxy-image
+    ports:
+      - "80:80"        # ← ONLY the proxy is exposed to the outside
+    depends_on:
+      - frontend
+      - backend
